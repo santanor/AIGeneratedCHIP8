@@ -10,7 +10,7 @@ class Instructions:
         nnn = opcode & 0x0FFF
 
         instruction_map = {
-            0x0000: self._execute_0,
+            0x0000: lambda: self._execute_0(opcode),  # Pass opcode to _execute_0
             0x1000: lambda: self.jump(nnn),
             0x2000: lambda: self.call_subroutine(nnn),
             0x3000: lambda: self.skip_if_equal(x, nn),
@@ -30,12 +30,8 @@ class Instructions:
 
         instruction = instruction_map.get(opcode & 0xF000)
         if instruction:
-            if opcode & 0xF000 == 0x0000:
-                instruction(opcode)
-            else:
-                instruction()
+            instruction()
         else:
-            # This case should now be redundant, but we'll keep it for safety
             print(f"Warning: Unknown opcode encountered: {opcode:04X}. Skipping.")
             self.emulator.cpu.pc += 2  # Move to the next instruction
 
@@ -44,8 +40,13 @@ class Instructions:
             self.clear_screen()
         elif opcode == 0x00EE:
             self.return_from_subroutine()
+        elif opcode == 0x0000:
+            # No operation (NOP)
+            print(f"Warning: NOP instruction (0x0000) encountered at PC: {self.emulator.cpu.pc:04X}")
+            pass
         else:
-            raise ValueError(f"Unknown opcode: {opcode:04X}")
+            print(f"Warning: Unknown 0x0000 opcode: {opcode:04X}. Skipping.")
+            self.emulator.cpu.pc += 2  # Move to the next instruction
 
     def clear_screen(self):
         self.emulator.display.clear()
@@ -84,11 +85,11 @@ class Instructions:
             0x1: lambda: self.set_register(x, self.emulator.cpu.v[x] | self.emulator.cpu.v[y]),
             0x2: lambda: self.set_register(x, self.emulator.cpu.v[x] & self.emulator.cpu.v[y]),
             0x3: lambda: self.set_register(x, self.emulator.cpu.v[x] ^ self.emulator.cpu.v[y]),
-            0x4: self._add_with_carry,
-            0x5: self._subtract_with_borrow,
-            0x6: self._shift_right,
-            0x7: self._subtract_from_with_borrow,
-            0xE: self._shift_left,
+            0x4: lambda: self._add_with_carry(x, y),
+            0x5: lambda: self._subtract_with_borrow(x, y),
+            0x6: lambda: self._shift_right(x),
+            0x7: lambda: self._subtract_from_with_borrow(x, y),
+            0xE: lambda: self._shift_left(x),
         }
         op = operations.get(operation)
         if op:

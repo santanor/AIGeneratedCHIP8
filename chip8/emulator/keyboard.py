@@ -2,6 +2,9 @@ import glfw
 
 class Keyboard:
     def __init__(self):
+        self.reset()
+
+    def reset(self):
         self.key_map = {
             glfw.KEY_1: 0x1, glfw.KEY_2: 0x2, glfw.KEY_3: 0x3, glfw.KEY_4: 0xC,
             glfw.KEY_Q: 0x4, glfw.KEY_W: 0x5, glfw.KEY_E: 0x6, glfw.KEY_R: 0xD,

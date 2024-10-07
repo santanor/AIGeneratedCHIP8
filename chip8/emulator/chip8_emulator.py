@@ -8,18 +8,21 @@ from .instructions import Instructions  # Import the Instructions class
 from .keyboard import Keyboard
 
 class Chip8Emulator:
-    def __init__(self, instructions_per_second=700):
+    def __init__(self, instructions_per_second=2000):
+        self.instructions_per_second = instructions_per_second
+        self.reset()
+
+    def reset(self):
         self.memory = Memory()
         self.timer = Timer()
-        self.display = Display()  # Create a Display object
-        self.instructions = Instructions(self)  # Create an Instructions object
-        self.cpu = CPU(self, self.instructions)  # Pass emulator and instructions to CPU
+        self.display = Display()
+        self.instructions = Instructions(self)
+        self.cpu = CPU(self, self.instructions)
+        self.keyboard = Keyboard()
         self.instruction_count = 0
         self.last_time = time.time()
-        self.instructions_per_second = instructions_per_second
-        self.nanoseconds_per_instruction = 1_000_000_000 // instructions_per_second
+        self.nanoseconds_per_instruction = 1_000_000_000 // self.instructions_per_second
         self.last_instruction_time = time.time_ns()
-        self.keyboard = Keyboard()
 
     def load_rom(self, rom_path):
         # Read the ROM file

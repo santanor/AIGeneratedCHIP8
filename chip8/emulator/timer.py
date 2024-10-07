@@ -2,6 +2,9 @@ import time
 
 class Timer:
     def __init__(self):
+        self.reset()
+
+    def reset(self):
         self.delay_timer = 0
         self.sound_timer = 0
         self.last_update = time.time()

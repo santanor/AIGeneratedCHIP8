@@ -1,5 +1,8 @@
 class Memory:
     def __init__(self):
+        self.reset()
+
+    def reset(self):
         self.memory = [0] * 4096
         self.load_font_set()
 

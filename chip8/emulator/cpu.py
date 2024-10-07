@@ -5,9 +5,12 @@ class CPU:
     def __init__(self, emulator, instructions):
         self.emulator = emulator
         self.instructions = instructions
+        self.reset()
+
+    def reset(self):
         self.lock = threading.Lock()
-        self.memory = emulator.memory
-        self.timer = emulator.timer
+        self.memory = self.emulator.memory
+        self.timer = self.emulator.timer
         self.pc = 0x200  # Program counter
         self.v = [0] * 16  # V registers
         self.i = 0  # Index register

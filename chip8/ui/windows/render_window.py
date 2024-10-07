@@ -1,11 +1,9 @@
-from ..window import Window
 import imgui
 import numpy as np
 from OpenGL.GL import *
 
-class RenderWindow(Window):
+class RenderWindow:
     def __init__(self, emulator):
-        super().__init__("Render")
         self.emulator = emulator
         self.texture_id = None
         self.init_texture()
@@ -23,7 +21,7 @@ class RenderWindow(Window):
         display_array = np.array(display_data, dtype=np.uint8) * 255
         glTexImage2D(GL_TEXTURE_2D, 0, GL_RED, 64, 32, 0, GL_RED, GL_UNSIGNED_BYTE, display_array)
 
-    def draw_contents(self):
+    def render(self):
         display_data = self.emulator.get_display()
         self.update_texture(display_data)
 

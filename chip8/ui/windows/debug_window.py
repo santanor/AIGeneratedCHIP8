@@ -1,12 +1,10 @@
-from ..window import Window
 import imgui
 
-class DebugWindow(Window):
+class DebugWindow:
     def __init__(self, emulator):
-        super().__init__("Debug")
         self.emulator = emulator
 
-    def draw_contents(self):
+    def render(self):
         if imgui.begin_table("debug_table", 2, imgui.TABLE_BORDERS | imgui.TABLE_SIZING_FIXED_FIT):
             imgui.table_setup_column("Label")
             imgui.table_setup_column("Value")

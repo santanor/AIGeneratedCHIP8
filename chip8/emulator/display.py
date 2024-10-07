@@ -3,7 +3,10 @@ class Display:
     HEIGHT = 32
 
     def __init__(self):
-        self.screen = [[0 for _ in range(self.WIDTH)] for _ in range(self.HEIGHT)]
+        self.reset()
+
+    def reset(self):
+        self.clear()
 
     def clear(self):
         """Clear the display, turning all pixels off."""
