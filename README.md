@@ -4,6 +4,8 @@ This project is a CHIP8 emulator implemented in Python, entirely generated using
 
 **Note: No manual code writing was involved in this project.**
 
+![CHIP8 Logo](images/output.gif)
+
 ## Features
 
 - Full CHIP8 instruction set implementation
