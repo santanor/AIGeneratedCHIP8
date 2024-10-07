@@ -1,0 +1,23 @@
+{
+    "version": "0.2.0",
+    "configurations": [
+        {
+            "name": "Python: PyImGui Project",
+            "type": "debugpy",
+            "request": "launch",
+            "program": "${workspaceFolder}/chip8/main.py",
+            "console": "integratedTerminal",
+            "justMyCode": true,
+            "env": {"PYTHONPATH":"${workspaceFolder}"},
+            "cwd": "${workspaceFolder}",
+            "python": "${workspaceFolder}/venv/bin/python",
+        },
+        {
+            "name": "Python Debugger: Current File",
+            "type": "debugpy",
+            "request": "launch",
+            "program": "${file}",
+            "console": "integratedTerminal"
+        }
+    ]
+}
